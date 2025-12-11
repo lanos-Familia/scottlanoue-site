@@ -13,454 +13,92 @@
     <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
 
     <style>
-    * {
+    html, body {
         margin: 0;
         padding: 0;
-        box-sizing: border-box;
-    }
-
-    html, body {
         height: 100%;
     }
 
     body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-        background: #0a0a0a;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; 
+        background-color: #000000;
         color: #ffffff;
-        min-height: 100vh;
-        position: relative;
+        font-family: Arial, sans-serif;
+        box-sizing: border-box;
+        padding: 0 1rem;
     }
 
-    .background {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-size: cover;
-        background-position: center;
-        opacity: 0.3;
-        transition: opacity 1s ease, background-image 1s ease;
-        z-index: 0;
-    }
-
-    .background.loaded {
-        opacity: 0.4;
-    }
-
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(135deg, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.7) 100%);
-        z-index: 1;
-    }
-
-    .container {
-        position: relative;
-        z-index: 2;
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 2rem;
-    }
-
-    header {
-        margin-bottom: 3rem;
-    }
-
-    h1 {
-        font-size: 2.5rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-    }
-
-    .subtitle {
-        color: #888;
-        font-size: 1.1rem;
-    }
-
-    .location {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: #666;
-        font-size: 0.9rem;
-        margin-top: 0.5rem;
-    }
-
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-    }
-
-    .card {
-        background: rgba(255,255,255,0.05);
-        border: 1px solid rgba(255,255,255,0.1);
-        border-radius: 12px;
-        padding: 1.5rem;
-        backdrop-filter: blur(10px);
-    }
-
-    .card h2 {
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: #888;
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .service-list {
-        list-style: none;
-    }
-
-    .service-list li {
-        margin-bottom: 0.75rem;
-    }
-
-    .service-list a {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        color: #fff;
-        text-decoration: none;
-        padding: 0.5rem;
-        border-radius: 8px;
-        transition: background 0.2s;
-    }
-
-    .service-list a:hover {
-        background: rgba(255,255,255,0.1);
-    }
-
-    .service-icon {
-        width: 32px;
-        height: 32px;
-        border-radius: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1rem;
-    }
-
-    .service-info {
+    main {
         flex: 1;
     }
 
-    .service-name {
-        font-weight: 500;
+    ul li {
+        margin-bottom: 0.5rem;
     }
 
-    .service-desc {
-        font-size: 0.8rem;
-        color: #888;
-    }
-
-    .status {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #22c55e;
-    }
-
-    .status.internal {
-        background: #3b82f6;
-    }
-
-    .host-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        gap: 0.5rem;
-    }
-
-    .host {
-        background: rgba(255,255,255,0.03);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 8px;
-        padding: 0.75rem;
-        font-size: 0.85rem;
-    }
-
-    .host-name {
-        font-weight: 500;
-        margin-bottom: 0.25rem;
-    }
-
-    .host-type {
-        font-size: 0.75rem;
-        color: #666;
-    }
-
-    .runner-list {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-
-    .runner {
-        background: rgba(34, 197, 94, 0.1);
-        border: 1px solid rgba(34, 197, 94, 0.3);
-        color: #22c55e;
-        padding: 0.4rem 0.75rem;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 500;
-    }
-
-    .social-links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-    }
-
-    .social-links a {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
+    a {
         color: #80c8ff;
         text-decoration: none;
-        padding: 0.5rem 1rem;
-        background: rgba(128,200,255,0.1);
-        border-radius: 20px;
-        font-size: 0.9rem;
-        transition: background 0.2s;
     }
 
-    .social-links a:hover {
-        background: rgba(128,200,255,0.2);
-    }
-
-    .projects-list {
-        list-style: none;
-    }
-
-    .projects-list li {
-        margin-bottom: 1rem;
-        padding-left: 1rem;
-        border-left: 2px solid rgba(255,255,255,0.2);
-    }
-
-    .projects-list a {
-        color: #80c8ff;
-        text-decoration: none;
-        font-weight: 500;
-    }
-
-    .projects-list a:hover {
-        text-decoration: underline;
-    }
-
-    .projects-list p {
-        color: #888;
-        font-size: 0.9rem;
-        margin-top: 0.25rem;
-    }
-
-    .sky-credit {
-        position: fixed;
-        bottom: 1rem;
-        right: 1rem;
-        font-size: 0.75rem;
-        color: #666;
-        z-index: 3;
-    }
-
-    .sky-credit a {
-        color: #888;
-        text-decoration: none;
-    }
-
-    .sky-credit a:hover {
-        color: #80c8ff;
-    }
-
-    @media (max-width: 600px) {
-        .container {
-            padding: 1rem;
-        }
-        h1 {
-            font-size: 1.8rem;
-        }
-        .grid {
-            grid-template-columns: 1fr;
-        }
+    a:hover {
+        color: #ffcc80;
     }
     </style>
-</head>
-<body>
+    </head>
+    <body>
 
-<div class="background" id="skyBackground"></div>
-<div class="overlay"></div>
+    <main>
+    <h1>Hi my name is Scott Lanoue</h1>
 
-<div class="container">
-    <header>
-        <h1>Scott Lanoue</h1>
-        <div class="subtitle">Software Engineer</div>
-        <div class="location">Seattle, WA (Remote)</div>
-    </header>
+    <p>I currently work remotely from Seattle, WA</p>
 
-    <div class="grid">
-        <div class="card">
-            <h2>Services</h2>
-            <ul class="service-list">
-                <li>
-                    <a href="https://gitea.lobster-hake.ts.net" target="_blank">
-                        <div class="service-icon" style="background: #609926;">G</div>
-                        <div class="service-info">
-                            <div class="service-name">Gitea</div>
-                            <div class="service-desc">Self-hosted Git server</div>
-                        </div>
-                        <div class="status internal" title="Internal (Tailscale)"></div>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://homepage.lobster-hake.ts.net" target="_blank">
-                        <div class="service-icon" style="background: #3b82f6;">H</div>
-                        <div class="service-info">
-                            <div class="service-name">Homepage</div>
-                            <div class="service-desc">Dashboard</div>
-                        </div>
-                        <div class="status internal" title="Internal (Tailscale)"></div>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://login.tailscale.com/admin/machines" target="_blank">
-                        <div class="service-icon" style="background: #000; border: 1px solid #333;">T</div>
-                        <div class="service-info">
-                            <div class="service-name">Tailscale</div>
-                            <div class="service-desc">Network admin</div>
-                        </div>
-                        <div class="status"></div>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://github.com/lanos-Familia" target="_blank">
-                        <div class="service-icon" style="background: #333;">GH</div>
-                        <div class="service-info">
-                            <div class="service-name">GitHub</div>
-                            <div class="service-desc">lanos-Familia org</div>
-                        </div>
-                        <div class="status"></div>
-                    </a>
-                </li>
-            </ul>
-        </div>
+    <p>Here are my links:</p>
+    <ul>
+        <li><a href="https://github.com/slanos">GitHub</a></li>
+        <li><a href="https://www.linkedin.com/in/scott-lanoue-238a11107/">LinkedIn</a></li>
+        <li><a href="https://medium.com/@schott12521">Medium</a></li>
+    </ul>
 
-        <div class="card">
-            <h2>Infrastructure</h2>
-            <div class="host-grid">
-                <div class="host">
-                    <div class="host-name">proxmox</div>
-                    <div class="host-type">Ryzen 9 / RTX 4070</div>
-                </div>
-                <div class="host">
-                    <div class="host-name">smallprox</div>
-                    <div class="host-type">i5-7600 / GTX 1080</div>
-                </div>
-                <div class="host">
-                    <div class="host-name">bts-macbook</div>
-                    <div class="host-type">Nomad Server</div>
-                </div>
-                <div class="host">
-                    <div class="host-name">gaming-vm</div>
-                    <div class="host-type">Windows VM</div>
-                </div>
-                <div class="host">
-                    <div class="host-name">vpn-gateway</div>
-                    <div class="host-type">Exit Node</div>
-                </div>
-            </div>
-        </div>
+    <p>My social links (views my own):</p>
+    <ul>
+        <li><a href="https://bsky.app/profile/scottlanoue.com">Bsky (@scottlanoue.com)</a></li>
+    </ul>
 
-        <div class="card">
-            <h2>CI/CD Runners</h2>
-            <div class="runner-list">
-                <span class="runner">runner-kotlin</span>
-                <span class="runner">runner-android</span>
-                <span class="runner">runner-small-1</span>
-                <span class="runner">runner-small-2</span>
-                <span class="runner">runner-emergency</span>
-            </div>
-        </div>
+    <p>Here's some links to my projects:</p>
+    <ul>
+        <li>
+            <a href="https://github.com/slanous/compose-cupertino">compose-cupertino</a>:
+            fork of a KMP library to make cross-platform UI feel more native
+        </li>
+    </ul>
 
-        <div class="card">
-            <h2>Connect</h2>
-            <div class="social-links">
-                <a href="https://github.com/slanos" target="_blank">GitHub</a>
-                <a href="https://bsky.app/profile/scottlanoue.com" target="_blank">Bluesky</a>
-                <a href="https://www.linkedin.com/in/scott-lanoue-238a11107/" target="_blank">LinkedIn</a>
-                <a href="https://medium.com/@schott12521" target="_blank">Medium</a>
-            </div>
-        </div>
+    <p>Here's some links to my articles:</p>
+    <ul>
+        <li>
+            <a href="https://medium.com/@schott12521/deploy-kotlin-mutliplatform-wasmjs-to-github-pages-fe295d8b420f">
+                Deploy Kotlin Mutliplatform WasmJS to Github Pages
+            </a>
+        </li>
+    </ul>
 
-        <div class="card">
-            <h2>Projects</h2>
-            <ul class="projects-list">
-                <li>
-                    <a href="https://gitea.lobster-hake.ts.net/lanos-Familia/familia" target="_blank">familia</a>
-                    <p>Backend monorepo - Kotlin/Ktor services</p>
-                </li>
-                <li>
-                    <a href="https://gitea.lobster-hake.ts.net/lanos-Familia/yamp" target="_blank">yamp</a>
-                    <p>Yet Another Music Player - social scrobbling & sync</p>
-                </li>
-                <li>
-                    <a href="https://gitea.lobster-hake.ts.net/lanos-Familia/homelab-nix" target="_blank">homelab-nix</a>
-                    <p>NixOS infrastructure as code</p>
-                </li>
-                <li>
-                    <a href="https://github.com/slanous/compose-cupertino" target="_blank">compose-cupertino</a>
-                    <p>KMP library for native cross-platform UI</p>
-                </li>
-            </ul>
-        </div>
+    <p>Here's some (open source) work I've been contributing to:</p>
+    <ul>
+        <li>
+            <a href="https://github.com/tabilzad/ktor-docs-plugin">ktor-docs-plugin</a>:
+            contributed to an open source kotlin library for openapi spec generation via ktor
+        </li>
+        <li>
+            <a href="https://github.com/nomanr/lumo-ui/pull/7">
+                Adding Kotlin Multiplatform support to an Android library for Themed Component generation
+            </a>
+        </li>
+    </ul>
+    </main>
 
-        <div class="card">
-            <h2>Writing</h2>
-            <ul class="projects-list">
-                <li>
-                    <a href="https://medium.com/@schott12521/deploy-kotlin-mutliplatform-wasmjs-to-github-pages-fe295d8b420f" target="_blank">Deploy KMP WasmJS to GitHub Pages</a>
-                    <p>Tutorial on deploying Kotlin Multiplatform to the web</p>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
+    <p>Have a great day, thanks for stopping by!</p>
 
-<div class="sky-credit">
-    Seattle sky via <a href="https://bsky.app/profile/colorofseattle.bsky.social" target="_blank">@colorofseattle</a>
-</div>
-
-<script>
-async function loadSeattleSky() {
-    try {
-        const response = await fetch('https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=colorofseattle.bsky.social&limit=1');
-        const data = await response.json();
-        const post = data.feed[0]?.post;
-        const imageUrl = post?.embed?.images?.[0]?.fullsize;
-
-        if (imageUrl) {
-            const bg = document.getElementById('skyBackground');
-            const img = new Image();
-            img.onload = () => {
-                bg.style.backgroundImage = `url(${imageUrl})`;
-                bg.classList.add('loaded');
-            };
-            img.src = imageUrl;
-        }
-    } catch (e) {
-        console.log('Could not load Seattle sky:', e);
-    }
-}
-
-loadSeattleSky();
-</script>
-
-</body>
+    </body>
 </html>
