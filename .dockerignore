@@ -1,6 +1,0 @@
-.git
-.gitea
-.github
-*.md
-Dockerfile
-.dockerignore
