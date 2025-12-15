@@ -3,7 +3,7 @@
     "letta": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "letta-mcp-server"],
+      "args": ["-y", "@iflow-mcp/letta-mcp-server"],
       "env": {
         "LETTA_BASE_URL": "https://letta.lobster-hake.ts.net",
         "LETTA_PASSWORD": "${LETTA_SERVER_PASSWORD}"
